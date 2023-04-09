@@ -13,7 +13,7 @@ def read_file(input_file = "input.txt") -> list[str]:
     text = file.read()
     return text.split()
 
-def tokenize(tokens : list[str]) -> list[Token]:
+def scan(tokens : list[str]) -> list[Token]:
     new_tokens = []
     for tk in tokens:
         new_tk = Token(tk)
@@ -26,21 +26,21 @@ def solve(tokens : list[Token]) -> Token:
     stack : list[Token] = []  # I'll use python list as stacks
 
     for tk in tokens:
-        if tk.type == "NUM": stack.append(tk)
+        if tk.type == Tk_Type.NUM: stack.append(tk)
         else:
             match tk.type:
-                case 'PLUS':    result = stack.pop().lexeme + stack.pop().lexeme
-                case 'MINUS':   result = stack.pop().lexeme - stack.pop().lexeme
-                case 'DIVISION':result = stack.pop().lexeme / stack.pop().lexeme
-                case 'MODULO':  result = stack.pop().lexeme % stack.pop().lexeme
-                case 'TIMES':   result = stack.pop().lexeme * stack.pop().lexeme
+                case Tk_Type.PLUS:     result = stack.pop().lexeme + stack.pop().lexeme
+                case Tk_Type.MINUS:    result = stack.pop().lexeme - stack.pop().lexeme
+                case Tk_Type.DIVISION: result = stack.pop().lexeme / stack.pop().lexeme
+                case Tk_Type.MODULO:   result = stack.pop().lexeme % stack.pop().lexeme
+                case Tk_Type.TIMES:    result = stack.pop().lexeme * stack.pop().lexeme
                 case _: raise Exception(f"Unknown symbol {tk}")
             stack.append(Token(str(result)))
 
     return stack.pop()
 
-tokens = read_file(); print(tokens)
-tokenizeds = tokenize(tokens)
+symbols : list[str] = read_file(); print(symbols) # Read File
+tokens : list[Token] = scan(symbols)
 
-resultado = solve(tokenizeds)
+resultado = solve(tokens)
 print(f'O resultado das operações foram: {resultado.lexeme}')
