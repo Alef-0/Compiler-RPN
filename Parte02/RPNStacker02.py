@@ -1,6 +1,6 @@
 import os.path as pt
 import sys
-from TokenClass import *
+from TokenClass02 import *
 
 local = pt.dirname(__file__)
 
@@ -8,10 +8,10 @@ def read_file(input_file = "input.txt") -> list[str]:
     # Check if it was passed a "-input" flag
     new_file = [new for new in sys.argv if ("-input=" in new)]
     if new_file: input_file = new_file[0].split("=")[-1]
-
+    # Read the file input and separate tokens per line
     file = open(pt.join(local,input_file),"r")
     text = file.read()
-    return text.split()
+    return text.split("\n")
 
 def scan(tokens : list[str]) -> list[Token]:
     new_tokens = []

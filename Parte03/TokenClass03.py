@@ -1,5 +1,5 @@
 from enum import Enum
-from LexerClass import *
+from LexerClass03 import *
 
 class Tk_Type(Enum):
     PLUS = 1
@@ -13,9 +13,9 @@ class Token:
     lexer = Lexer()
 
     def __init__(self, token : str):
-        if self.lexer.is_num.match(token): 
+        if self.lexer.is_num(token): 
             self.type = Tk_Type.NUM
-        elif self.lexer.is_op.match(token):
+        elif self.lexer.is_op(token):
             if   token == '+': self.type = Tk_Type.PLUS
             elif token == '-': self.type = Tk_Type.MINUS
             elif token == '*': self.type = Tk_Type.TIMES
