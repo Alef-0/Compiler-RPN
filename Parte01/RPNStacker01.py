@@ -24,7 +24,7 @@ def solve(tokens : list[str]):
                 case '/': result = stack.pop() / stack.pop()
                 case '%': result = stack.pop() % stack.pop()
                 case '*': result = stack.pop() * stack.pop()
-                case _: raise Exception(f"Unknown symbol {tk}")
+                case _: raise SyntaxError(f"Unknown symbol {tk}")
             stack.append(result)
 
     return stack.pop()

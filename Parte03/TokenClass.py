@@ -1,4 +1,5 @@
 from enum import Enum
+from LexerClass import *
 
 class Tk_Type(Enum):
     PLUS = 1
@@ -9,16 +10,18 @@ class Tk_Type(Enum):
     NUM = 6
 
 class Token:
+    lexer = Lexer()
+
     def __init__(self, token : str):
-        if token.isdigit(): 
+        if self.lexer.is_num.match(token): 
             self.type = Tk_Type.NUM
-        else:
+        elif self.lexer.is_op.match(token):
             if   token == '+': self.type = Tk_Type.PLUS
             elif token == '-': self.type = Tk_Type.MINUS
             elif token == '*': self.type = Tk_Type.TIMES
             elif token == '/': self.type = Tk_Type.DIVISION
             elif token == '%': self.type = Tk_Type.MODULO
-            else: raise SyntaxError(f"UNKNOWN TOKEN: \"{token}\"")
+        else: raise SyntaxError(f"UNKNOWN TOKEN: \"{token}\"")
         # No need for EOF since python always read everything
 
         if self.type == Tk_Type.NUM: self.lexeme = int(token)
